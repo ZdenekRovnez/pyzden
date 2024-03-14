@@ -23,9 +23,9 @@ jobs:
     - name: Check code with PyLint
       continue-on-error: true
       run: |
-        pylint my_project/ || echo "PyLint checks failed"
+        pylint . || echo "PyLint checks failed"
     
     - name: Check format with Black
       continue-on-error: true
       run: |
-        black --check --line-length 120 my_project/ || echo "Black formatting checks failed"
+        black --check --line-length 120 . || echo "Black formatting checks failed"
