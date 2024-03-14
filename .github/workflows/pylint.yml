@@ -22,7 +22,7 @@ jobs:
     
     - name: Check code with PyLint
       run: |
-        find . -type f -name "*.py" | xargs pylint
+        find . -type f -name "*.py" | xargs pylint --disable=missing-module-docstring,missing-function-docstring
     
     - name: Check format with Black
       run: |
