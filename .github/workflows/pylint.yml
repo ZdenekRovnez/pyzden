@@ -23,7 +23,7 @@ jobs:
     - name: Check code with PyLint
       continue-on-error: true
       run: |
-        pylint . || echo "PyLint checks failed"
+        find . -type f -name "*.py" | xargs pylint || echo "PyLint checks failed"
     
     - name: Check format with Black
       continue-on-error: true
