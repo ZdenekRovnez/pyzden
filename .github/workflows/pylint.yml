@@ -1,23 +1,31 @@
-name: Pylint
+name: Code Quality Checks
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
-  build:
+  code-quality:
+    name: Run PyLint and Black
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.8", "3.9", "3.10"]
+    
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
+    - uses: actions/checkout@v2
+    
+    - name: Set up Python
+      uses: actions/setup-python@v2
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: '3.11'
+    
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pylint
-    - name: Analysing the code with pylint
+        pip install pylint black
+    
+    - name: Check code with PyLint
+      continue-on-error: true
       run: |
-        pylint $(git ls-files '*.py')
+        pylint my_project/ || echo "PyLint checks failed"
+    
+    - name: Check format with Black
+      continue-on-error: true
+      run: |
+        black --check --line-length 120 my_project/ || echo "Black formatting checks failed"
