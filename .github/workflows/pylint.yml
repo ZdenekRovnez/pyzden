@@ -21,11 +21,11 @@ jobs:
         pip install pylint black
     
     - name: Check code with PyLint
-      continue-on-error: true
+      continue-on-error: false
       run: |
         find . -type f -name "*.py" | xargs pylint || echo "PyLint checks failed"
     
     - name: Check format with Black
-      continue-on-error: true
+      continue-on-error: false
       run: |
         black --check --line-length 120 . || echo "Black formatting checks failed"
